@@ -93,9 +93,15 @@ app.get('/tareas/buscar', (req, res) => {
 
 // GET - Historial de cambios de una tarea
 app.get('/tareas/:id/historial', (req, res) => {
-    // ======================================================================
-    // =============================== AQUI IRIA LO DE HISTORIAL DE CAMBIOS =
-    // ======================================================================
+    const tarea = tareas.find(t => t.id == req.params.id);
+
+    if (!tarea) {
+        return res.status(404).json({ mensaje: 'No se encontró la tarea' });
+    }
+
+    const historial = auditoria.filter(a => a.tareaId == req.params.id);
+
+    res.json(historial);
 });
 
 // POST - Transicion de estado de una tarea
@@ -109,6 +115,10 @@ app.post('/tareas/:id/transicion', (req, res) => {
     }
 
     const { nuevoEstado } = req.body;
+
+    if (!nuevoEstado) {
+        return res.status(400).json({ mensaje: 'Debe enviar nuevo estado' });
+    }
 
     const transicionesPermitidas = TRANSICIONES_VALIDAS[tarea.estado];
 
