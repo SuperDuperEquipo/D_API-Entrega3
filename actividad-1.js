@@ -22,6 +22,11 @@ let tareas = [
     }
 ];
 
+// GET - Default
+app.get('/', (req, res) => {
+    res.json({ mensaje: 'API actividad-1 super duper funcionando' })
+});
+
 // GET - Obtener todas las tareas 
 app.get('/tareas', (req, res) => {
     res.json(tareas);

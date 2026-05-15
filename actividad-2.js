@@ -52,59 +52,10 @@ function paginarResultados(elementos, paginas = 1, limit = 10) {
     };
 }
 
-// POST - Crear un comentario en una tarea
-app.post('/tareas/:tareaId/comentarios', (req, res) => {
-
-    const tarea = tareas.find(t => t.id == req.params.tareaId);
-
-    if (!tarea)
-    {
-        return res.status(404).json({ mensaje: 'No se encontró la tarea' });
-    }
-
-    const { autor, texto } = req.body;
-
-    const nuevoComentario = {
-        id: Date.now(),
-        tareaId: tarea.id,
-        autor,
-        texto,
-        fecha: new Date()
-    };
-
-    comentarios.push(nuevoComentario);
-    res.status(201).json(nuevoComentario);
+// GET - Default
+app.get('/', (req, res) => {
+    res.json({ mensaje: 'API actividad-2 super duper funcionando' })
 });
-
-// POST - Reasignar una tarea
-app.post('/tareas/:id/reasignar', (req, res) => {
-
-    const tarea = tareas.find(t => t.id == req.params.id);
-
-    if (!tarea)
-    {
-        return res.status(404).json({ mensaje: 'No se encontró la tarea' });
-    }
-
-    const { nuevoAsignado } = req.body;
-
-    if (!Asignados.includes(nuevoAsignado)) {
-        return res.status(400).json({ mensaje: 'El asignado no está en la lista de asignados válidos' });
-    }
-
-    const resgistro = {
-        tareaId: tarea.id,
-        asignadoAnterior: tarea.asignado,
-        nuevoAsignado,
-        fecha: new Date()
-    };
-
-    reasignaciones.push(resgistro);
-    tarea.asignado = nuevoAsignado;
-
-    res.json(tarea);
-});
-
 
 // GET - Obtener tareas con filtros, orde y paginacion
 app.get('/tareas', (req, res) => {
@@ -160,6 +111,61 @@ app.get('/tareas/:tareaId/comentarios', (req, res) => {
 
     res.json(comentariosDeTarea);
 });
+
+
+// POST - Crear un comentario en una tarea
+app.post('/tareas/:tareaId/comentarios', (req, res) => {
+
+    const tarea = tareas.find(t => t.id == req.params.tareaId);
+
+    if (!tarea)
+    {
+        return res.status(404).json({ mensaje: 'No se encontró la tarea' });
+    }
+
+    const { autor, texto } = req.body;
+
+    const nuevoComentario = {
+        id: Date.now(),
+        tareaId: tarea.id,
+        autor,
+        texto,
+        fecha: new Date()
+    };
+
+    comentarios.push(nuevoComentario);
+    res.status(201).json(nuevoComentario);
+});
+
+// POST - Reasignar una tarea
+app.post('/tareas/:id/reasignar', (req, res) => {
+
+    const tarea = tareas.find(t => t.id == req.params.id);
+
+    if (!tarea)
+    {
+        return res.status(404).json({ mensaje: 'No se encontró la tarea' });
+    }
+
+    const { nuevoAsignado } = req.body;
+
+    if (!Asignados.includes(nuevoAsignado)) {
+        return res.status(400).json({ mensaje: 'El asignado no está en la lista de asignados válidos' });
+    }
+
+    const resgistro = {
+        tareaId: tarea.id,
+        asignadoAnterior: tarea.asignado,
+        nuevoAsignado,
+        fecha: new Date()
+    };
+
+    reasignaciones.push(resgistro);
+    tarea.asignado = nuevoAsignado;
+
+    res.json(tarea);
+});
+
 
 // PUT - Actualizar comentarios
 app.put('/tareas/:tareaId/comentarios/:comentarioId', (req, res) => {
