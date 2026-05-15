@@ -1,0 +1,23 @@
+{
+  "name": "d_api-entrega3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "actividad-1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SuperDuperEquipo/D_API-Entrega3.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SuperDuperEquipo/D_API-Entrega3/issues"
+  },
+  "homepage": "https://github.com/SuperDuperEquipo/D_API-Entrega3#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
